@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from "vue";
+import {ref} from "vue";
 
 import AppInput from "../components/UI/AppInput.vue";
 
@@ -34,12 +34,24 @@ const validationSchema = {
   },
 
   email: (value) => {
-    return emailValidation(value);
+    const req = required(value)
+    if (req !== true)
+      return req;
+
+    const validEmail = emailValidation(value);
+
+    if (validEmail !== true)
+      return validEmail;
+
+    return true;
   },
 
   tel: (value) => {
-    return phoneValidation(value);
+    const validPhone = phoneValidation(value);
+    if (validPhone !== true)
+      return validPhone;
 
+    return true;
   },
 
   msg: (value) => {
@@ -70,17 +82,8 @@ const { value: msg, errorMessage: msgError } = useField('msg');
 
 const agreement = ref(true);
 
-const submitForm = handleSubmit((values, actions) => {
-  try {
-    alert(`${values} - OK`);
-    // actions.resetForm();
-  } catch (e) {
-    console.warn(e);
-  }
-});
-
-const hasErrors = computed(() => {
-  return Object.keys(errors.value).length > 0;
+const submitForm = handleSubmit(values => {
+  alert(JSON.stringify(values, null, 2));
 });
 
 </script>
@@ -128,7 +131,7 @@ const hasErrors = computed(() => {
                 placeholder="Введите телефон"
                 v-model="tel"
             >
-            <span v-if="telError">{{ telError }}</span>
+            <span class="form__input _error" v-if="telError">{{ telError }}</span>
           </div>
 
           <div class="form__item">
@@ -158,7 +161,7 @@ const hasErrors = computed(() => {
             <!-- /.form__checkbox -->
           </div>
 
-          <button type="submit" class="form__btn" :disabled="hasErrors && !agreement">Отправить</button>
+          <button type="submit" class="form__btn" :disabled="!agreement">Отправить</button>
         </form>
         <!-- /#form.form__body -->
       </div>
@@ -169,8 +172,5 @@ const hasErrors = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.invalid-warning {
-  margin: 10px auto;
-  color: red;
-}
+
 </style>
