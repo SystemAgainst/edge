@@ -1,0 +1,108 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.form * {
+  outline: none;
+}
+
+.form__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.form__item {
+  margin-bottom: 1rem;
+}
+.form__label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: .5rem;
+}
+.form__input {
+  height: 3rem;
+  padding: 0 1rem;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 1.2rem;
+  box-shadow: none;
+  transition: box-shadow .3s ease 0s;
+  &._error {
+    box-shadow: 0 0 15px red;
+    font-size: .7rem;
+  }
+  &:focus {
+    box-shadow: 0 0 15px #6132d3;
+  }
+}
+textarea.form__input {
+  min-height: 7.5rem;
+  resize: vertical;
+  padding: 1rem;
+}
+.form__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 4rem;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: #6132d3;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background .1s linear;
+  border: none;
+  &:hover,
+  &:focus,
+  &:active {
+    background: #4a28a4;
+  }
+  &:disabled {
+    background: #4a28a4;
+    cursor: auto;
+  }
+}
+
+
+.checkbox__input {
+  display: none;
+}
+.checkbox__input:checked + .checkbox__label::after {
+  transform: scale(1);
+}
+.checkbox__label {
+  font-size: 1rem;
+  line-height: 1.4;
+  display: inline-flex; // ЗАЧЕМ??????
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  &::before {
+    content: "";
+    flex: 0 0 1.5rem;
+    height: 1.5rem;
+    background-color: white;
+    border-radius: 4px;
+    align-self: flex-start;
+    margin-right: 10px;
+  }
+  &::after {
+    transition: transform .3s ease 0s;
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background-color: #6132d3;
+    border-radius: 4px;
+    transform: scale(0);
+  }
+}
